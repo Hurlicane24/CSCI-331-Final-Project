@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify App</title>
+</head>
+<body>
+    <h1>Top Songs Tracker</h1>
+
+    {% if access_token %}
+        <p>Your Access Token: {{ access_token }}</p>
+
+        <h2>Top 50 Global Tracks:</h2>
+        <ul>
+            {% if tracks %}
+                {% for track in tracks %}
+                    <li>
+                        <strong>{{ track.track.name }}</strong> by 
+                        <em>{{ track.track.artists[0].name }}</em><br>
+                        <img src="{{ track.track.album.images[0].url }}" alt="{{ track.track.name }}" style="width: 100px;"><br>
+                        <a href="{{ track.track.external_urls.spotify }}" target="_blank">Listen on Spotify</a>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <p>No tracks found.</p>
+            {% endif %}
+        </ul>
+
+    {% else %}
+        <p>Failed to retrieve access token.</p>
+    {% endif %}
+</body>
+</html>
