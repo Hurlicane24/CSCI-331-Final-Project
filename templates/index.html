@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify App</title>
+</head>
+<body>
+    <script>
+        function redirect() {
+            window.location.href = '/recommend.html';
+        }
+    </script>
+
+    <h1>Top Songs Tracker</h1>
+
+    {% if not access_token %}
+        <!-- User is not logged in -->
+        <h1>Welcome to Spotify Top Songs Tracker!</h1>
+        <p>In order to view your top tracks, please log in to Spotify</p>
+        <a href="/login"><button>Login with Spotify</button></a>
+    {% else %}
+        <!-- User is logged in -->
+        <p>Your Access Token: {{ access_token }}</p>
+
+        <h2>Your Top Tracks:</h2>
+        <ul>
+            {% if tracks %}
+                {% for track in tracks %}
+                    <li>
+                        <strong>{{ track.name }}</strong> by 
+                        <em>{{ track.artists[0].name }}</em><br>
+                        <img src="{{ track.album.images[0].url }}" alt="{{ track.name }}" style="width: 100px;"><br>
+                        <a href="{{ track.external_urls.spotify }}" target="_blank">Listen on Spotify</a>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <p>No top tracks found. Try listening to more music on Spotify!</p>
+            {% endif %}
+        </ul>
+    {% endif %}
+
+    <button onclick="redirect()">Recommend Songs</button>
+    <form action="/logout" method="get">
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>
