@@ -233,13 +233,21 @@ def login():
     )
     return redirect(spotify_auth_url)
 
-@app.route('/logout')
+@app.route('/logout', methods=['GET', 'POST'])
 def logout():
-    # Explicitly remove session keys
+    print("Logout route hit. Session before clearing:", dict(session))
+    # Explicitly remove authentication tokens from session
     session.pop('access_token', None)
     session.pop('refresh_token', None)
-    print("Session tokens cleared. Redirecting to login.")
+    session.modified = True  # Mark the session as modified
+    print("Session after clearing:", dict(session))
+    print("Session cleared. Redirecting to login.")
     return redirect(url_for('login'))
+
+@app.after_request
+def add_header(response):
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, private'
+    return response
 
 # Spotify callback route
 @app.route('/callback')
