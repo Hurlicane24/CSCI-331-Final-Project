@@ -151,6 +151,7 @@ if __name__ == '__main__':
     app.run(host="localhost", port=5000, debug=True)'''
 
 from flask import Flask, redirect, request, render_template, session, url_for
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
 import requests
 import urllib.parse
 
@@ -233,16 +234,11 @@ def login():
     )
     return redirect(spotify_auth_url)
 
-@app.route('/logout', methods=['GET', 'POST'])
+@app.route('/logout')
+@login_required
 def logout():
-    print("Logout route hit. Session before clearing:", dict(session))
-    # Explicitly remove authentication tokens from session
-    session.pop('access_token', None)
-    session.pop('refresh_token', None)
-    session.modified = True  # Mark the session as modified
-    print("Session after clearing:", dict(session))
-    print("Session cleared. Redirecting to login.")
-    return redirect(url_for('login'))
+    logout_user()
+    return redirect(url_for('index'))
 
 @app.after_request
 def add_header(response):
