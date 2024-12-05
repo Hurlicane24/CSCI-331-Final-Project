@@ -158,8 +158,8 @@ import urllib.parse
 app = Flask(__name__)
 app.secret_key = 'your_random_secret_key_here'  # Ensure this is a random string
 
-CLIENT_ID = "your_client_id"
-CLIENT_SECRET = "your_client_secret"
+CLIENT_ID = "dac33f8591f04e33a79719e5f9179df5"
+CLIENT_SECRET = "1278cc26209e45dc81a507dd98f98eaet"
 REDIRECT_URI = "http://localhost:5000/callback"
 
 # Route for the homepage
