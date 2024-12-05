@@ -2,45 +2,80 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotify App</title>
 </head>
 <body>
-    <script>
-        function redirect() {
-            window.location.href = '/recommend.html';
-        }
-    </script>
+    <h1>Welcome to Spotify Top Songs Tracker!</h1>
 
-    <h1>Top Songs Tracker</h1>
+    <!-- Display Access Token (for debugging purposes, can be removed in production) -->
+    <!-- <p>Your Access Token: {{ access_token }}</p> -->
 
-    {% if not access_token %}
-        <!-- User is not logged in -->
-        <h1>Welcome to Spotify Top Songs Tracker!</h1>
-        <p>In order to view your top tracks, please log in to Spotify</p>
-        <a href="/login"><button>Login with Spotify</button></a>
+    <!-- Button to play top tracks -->
+    <a href="/play_top_tracks"><button>Play Top Tracks</button></a>
+
+    <!-- Display Top Tracks -->
+    <h2>Your Top Tracks:</h2>
+    <ul>
+        {% if tracks %}
+            {% for track in tracks %}
+                <li>
+                    <strong>{{ track.name }}</strong> by 
+                    <em>{{ track.artists[0].name }}</em><br>
+                    <img src="{{ track.album.images[0].url }}" alt="{{ track.name }}" style="width: 100px;"><br>
+                    <a href="{{ track.external_urls.spotify }}" target="_blank">Listen on Spotify</a>
+                </li>
+            {% endfor %}
+        {% else %}
+            <p>No top tracks found. Try listening to more music on Spotify!</p>
+        {% endif %}
+    </ul>
+
+    <!-- Display Top Artists -->
+    <h2>Your Top Artists:</h2>
+    <ul>
+        {% if artists %}
+            {% for artist in artists %}
+                <li>
+                    <strong>{{ artist.name }}</strong><br>
+                    <img src="{{ artist.images[0].url }}" alt="{{ artist.name }}" style="width: 100px;"><br>
+                    <a href="{{ artist.external_urls.spotify }}" target="_blank">View on Spotify</a>
+                </li>
+            {% endfor %}
+        {% else %}
+            <p>No top artists found.</p>
+        {% endif %}
+    </ul>
+
+    <!-- Display Currently Playing Track -->
+    <h2>Currently Playing:</h2>
+    {% if currently_playing %}
+        <p>
+            <strong>{{ currently_playing.name }}</strong> by 
+            <em>{{ currently_playing.artists[0].name }}</em><br>
+            <img src="{{ currently_playing.album.images[0].url }}" alt="{{ currently_playing.name }}" style="width: 100px;"><br>
+            <a href="{{ currently_playing.external_urls.spotify }}" target="_blank">Listen on Spotify</a>
+        </p>
     {% else %}
-        <!-- User is logged in -->
-        <p>Your Access Token: {{ access_token }}</p>
-
-        <h2>Your Top Tracks:</h2>
-        <ul>
-            {% if tracks %}
-                {% for track in tracks %}
-                    <li>
-                        <strong>{{ track.name }}</strong> by 
-                        <em>{{ track.artists[0].name }}</em><br>
-                        <img src="{{ track.album.images[0].url }}" alt="{{ track.name }}" style="width: 100px;"><br>
-                        <a href="{{ track.external_urls.spotify }}" target="_blank">Listen on Spotify</a>
-                    </li>
-                {% endfor %}
-            {% else %}
-                <p>No top tracks found. Try listening to more music on Spotify!</p>
-            {% endif %}
-        </ul>
+        <p>No track is currently playing.</p>
     {% endif %}
 
-    <button onclick="redirect()">Recommend Songs</button>
+    <!-- Display Queue -->
+    <h2>Your Queue:</h2>
+    <ul>
+        {% if queue_tracks %}
+            {% for track in queue_tracks %}
+                <li>
+                    <strong>{{ track.name }}</strong> by 
+                    <em>{{ track.artists[0].name }}</em><br>
+                    <img src="{{ track.album.images[0].url }}" alt="{{ track.name }}" style="width: 100px;"><br>
+                    <a href="{{ track.external_urls.spotify }}" target="_blank">Listen on Spotify</a>
+                </li>
+            {% endfor %}
+        {% else %}
+            <p>Your queue is empty.</p>
+        {% endif %}
+    </ul>
+
     <form action="/logout" method="get">
         <button type="submit">Logout</button>
     </form>
