@@ -191,6 +191,55 @@ def play_top_tracks():
 
     return redirect(url_for('home'))
 
+# Route to skip to the next track
+@app.route('/next_track')
+def next_track():
+    access_token = session.get('access_token')
+    if not access_token:
+        return redirect(url_for('login'))
+
+    # Check token validity and refresh if necessary
+    if not is_token_valid(access_token):
+        access_token = refresh_access_token()
+        if not access_token:
+            return redirect(url_for('login'))
+        session['access_token'] = access_token
+
+    headers = {"Authorization": f"Bearer {access_token}"}
+    next_url = "https://api.spotify.com/v1/me/player/next"
+    response = requests.post(next_url, headers=headers)
+
+    if response.status_code != 204:
+        return f"Failed to skip to next track: {response.text}"
+
+    # Redirect back to the home page to refresh the UI
+    return redirect(url_for('home'))
+
+# Route to skip to the previous track
+@app.route('/previous_track')
+def previous_track():
+    access_token = session.get('access_token')
+    if not access_token:
+        return redirect(url_for('login'))
+
+    # Check token validity and refresh if necessary
+    if not is_token_valid(access_token):
+        access_token = refresh_access_token()
+        if not access_token:
+            return redirect(url_for('login'))
+        session['access_token'] = access_token
+
+    headers = {"Authorization": f"Bearer {access_token}"}
+    previous_url = "https://api.spotify.com/v1/me/player/previous"
+    response = requests.post(previous_url, headers=headers)
+
+    if response.status_code != 204:
+        return f"Failed to skip to previous track: {response.text}"
+
+    # Redirect back to the home page to refresh the UI
+    return redirect(url_for('home'))
+
+
 # Function to check if the access token is still valid
 def is_token_valid(access_token):
     test_url = "https://api.spotify.com/v1/me"
