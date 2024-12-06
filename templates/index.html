@@ -3,11 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <title>Spotify App</title>
-    <!-- Include Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <!-- Link to your CSS file -->
-    <link rel="stylesheet" href="main.css">
+    <style>
+        /* Reset some default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212;
+    color: #FFFFFF;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Header styling */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #1DB954; /* Spotify Green */
+}
+
+/* Subheader styling */
+h2 {
+    font-size: 1.8rem;
+    margin: 30px 0 20px 0;
+    color: #1DB954;
+    text-align: center;
+}
+
+/* Paragraph styling */
+p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Links styling */
+a {
+    color: #1DB954;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Buttons styling */
+button {
+    background-color: #1DB954;
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #1ed760;
+}
+
+/* Container styling */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* List styling */
+ul {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+li {
+    background-color: #181818;
+    border-radius: 8px;
+    margin: 15px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+li:hover {
+    transform: scale(1.05);
+}
+
+/* Image styling */
+img {
+    border-radius: 8px;
+    margin-bottom: 15px;
+    width: 100%;
+    height: auto;
+}
+
+/* Strong and Emphasis styling */
+strong {
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 5px;
+}
+
+em {
+    color: #b3b3b3;
+    font-size: 0.9rem;
+}
+
+/* Currently Playing section */
+.currently-playing {
+    background-color: #282828;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Queue section */
+.queue {
+    background-color: #181818;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+#shii {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    ul {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    li {
+        width: 80%;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    button {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+    </style>
 </head>
 <body>
     <h1>Welcome to Spotify Top Songs Tracker!</h1>
@@ -16,7 +174,7 @@
     <!-- <p>Your Access Token: {{ access_token }}</p> -->
 
     <!-- Button to play top tracks -->
-    <a href="/play_top_tracks"><button>Play Top Tracks</button></a>
+    <a href="/play_top_tracks" id="shii"><button>Play Top Tracks</button></a>
 
     <!-- Display Top Tracks -->
     <h2>Your Top Tracks:</h2>
@@ -80,12 +238,6 @@
             <p>Your queue is empty.</p>
         {% endif %}
     </ul>
-
-    <!-- Using a link (GET request) -->
-<a href="{{ url_for('logout') }}"><button type="button">Logout</button></a>
-
-<!-- OR using a form (POST request) -->
-<a href="{{ url_for('logout') }}"><button type="button">Logout</button></a>
 
 </body>
 </html>
