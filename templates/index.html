@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <title>Spotify App</title>
     <style>
-        /* Reset some default browser styles */
+        
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body styling */
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #121212;
@@ -20,15 +19,13 @@ body {
     padding: 20px;
 }
 
-/* Header styling */
 h1 {
     font-size: 2.5rem;
     margin-bottom: 20px;
     text-align: center;
-    color: #1DB954; /* Spotify Green */
+    color: #1DB954; 
 }
 
-/* Subheader styling */
 h2 {
     font-size: 1.8rem;
     margin: 30px 0 20px 0;
@@ -36,14 +33,12 @@ h2 {
     text-align: center;
 }
 
-/* Paragraph styling */
 p {
     font-size: 1rem;
     margin-bottom: 15px;
     text-align: center;
 }
 
-/* Links styling */
 a {
     color: #1DB954;
     text-decoration: none;
@@ -53,7 +48,6 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Buttons styling */
 button {
     background-color: #1DB954;
     color: #FFFFFF;
@@ -70,13 +64,11 @@ button:hover {
     background-color: #1ed760;
 }
 
-/* Container styling */
 .container {
     max-width: 1200px;
     margin: 0 auto;
 }
 
-/* List styling */
 ul {
     list-style-type: none;
     display: flex;
@@ -106,7 +98,6 @@ img {
     height: auto;
 }
 
-/* Strong and Emphasis styling */
 strong {
     font-size: 1.1rem;
     display: block;
@@ -118,7 +109,6 @@ em {
     font-size: 0.9rem;
 }
 
-/* Currently Playing section */
 .currently-playing {
     background-color: #282828;
     padding: 20px;
@@ -126,7 +116,6 @@ em {
     text-align: center;
 }
 
-/* Queue section */
 .queue {
     background-color: #181818;
     padding: 20px;
@@ -134,12 +123,12 @@ em {
     margin-top: 20px;
 }
 
-#shii {
+.button-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 10px;
 }
-
 
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
@@ -168,16 +157,13 @@ em {
     </style>
 </head>
 <body>
-    <h1>Welcome to Spotify Top Songs Tracker!</h1>
+    <h1>Welcome to Spotify Profile Digest</h1>
 
-    <!-- Display Access Token (for debugging purposes, can be removed in production) -->
-    <!-- <p>Your Access Token: {{ access_token }}</p> -->
-
-    <!-- Button to play top tracks -->
-    <!-- Buttons to control playback -->
-    <div>
-        <a href="{{ url_for('previous_track') }}"><button>Previous Track</button></a> <a href="/play_top_tracks" id="shii"><button>Play Top Tracks</button></a> <a href="{{ url_for('next_track') }}"><button>Next Track</button></a>
-    </div>
+    <div class="button-container">
+        <a href="{{ url_for('previous_track') }}"><button>&#9198;</button></a>
+        <a href="/play_top_tracks" id="shii"><button>Play Top Tracks</button></a>
+        <a href="{{ url_for('next_track') }}"><button>&#9197;</button></a>
+    </div>    
 
     <!-- Display Top Tracks -->
     <h2>Your Top Tracks:</h2>
