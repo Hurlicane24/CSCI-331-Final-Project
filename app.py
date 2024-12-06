@@ -4,7 +4,7 @@ import requests
 import urllib.parse
 
 app = Flask(__name__)
-app.secret_key = 'your_random_secret_key_here'  # Ensure this is a random string
+app.secret_key = 'secret_key' #Can be anything
 
 CLIENT_ID = "dac33f8591f04e33a79719e5f9179df5"
 CLIENT_SECRET = "1278cc26209e45dc81a507dd98f98eae"
@@ -83,12 +83,6 @@ def login():
     )
     return redirect(spotify_auth_url)
 
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('index'))
-
 @app.after_request
 def add_header(response):
     response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, private'
@@ -158,8 +152,6 @@ def play_top_tracks():
 
     track_uris = [track['uri'] for track in tracks]
 
-    # Start playback
-    #if(PLAY % 2 == 0):
     shuffle_url = "https://api.spotify.com/v1/me/player/shuffle?state=false"
     requests.put(shuffle_url, headers=headers)
 
@@ -173,22 +165,6 @@ def play_top_tracks():
     if play_response.status_code != 204:
         return f"Failed to start playback: {play_response.text}"
         
-    '''else:
-        pause_url = "https://api.spotify.com/v1/me/player/pause"
-        headers = {
-            'Authorization': f'Bearer {access_token}'
-        }
-
-        pause_response = requests.put(pause_url, headers=headers)
-
-        # Check the response status and body for debugging
-        if pause_response.status_code != 204:
-            print(f"Pause failed. Status Code: {pause_response.status_code}, Response: {pause_response.text}")
-        else:
-            print("Playback paused successfully.")
-
-    PLAY += 1'''
-
     return redirect(url_for('home'))
 
 # Route to skip to the next track
@@ -208,9 +184,6 @@ def next_track():
     headers = {"Authorization": f"Bearer {access_token}"}
     next_url = "https://api.spotify.com/v1/me/player/next"
     response = requests.post(next_url, headers=headers)
-
-    if response.status_code != 204:
-        return f"Failed to skip to next track: {response.text}"
 
     # Redirect back to the home page to refresh the UI
     return redirect(url_for('home'))
@@ -233,8 +206,8 @@ def previous_track():
     previous_url = "https://api.spotify.com/v1/me/player/previous"
     response = requests.post(previous_url, headers=headers)
 
-    if response.status_code != 204:
-        return f"Failed to skip to previous track: {response.text}"
+    '''if response.status_code != 204:
+        return f"Failed to skip to previous track: {response.text}"'''
 
     # Redirect back to the home page to refresh the UI
     return redirect(url_for('home'))
