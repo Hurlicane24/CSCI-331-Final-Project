@@ -174,7 +174,12 @@ em {
     <!-- <p>Your Access Token: {{ access_token }}</p> -->
 
     <!-- Button to play top tracks -->
-    <a href="/play_top_tracks" id="shii"><button>Play Top Tracks</button></a>
+    <!-- Buttons to control playback -->
+    <div>
+        <a href="{{ url_for('previous_track') }}"><button>Previous Track</button></a>
+        <a href="/play_top_tracks" id="shii"><button>Play Top Tracks</button></a>
+        <a href="{{ url_for('next_track') }}"><button>Next Track</button></a>
+    </div>
 
     <!-- Display Top Tracks -->
     <h2>Your Top Tracks:</h2>
